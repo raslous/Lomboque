@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject IHttpClientFactory ClientFactory
 
 
 <PageTitle>Index</PageTitle>
@@ -16,3 +17,32 @@ Welcome to your new app.
     </NotAuthorized>
 </AuthorizeView>
 
+
+<div>
+    json: @json
+</div>
+
+@code {
+
+    private string? json;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://192.168.2.118/get");
+            var client = ClientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                using var streamReader = new StreamReader(responseStream);
+
+                json = streamReader.ReadToEnd();
+                System.Console.WriteLine(json);
+                this.StateHasChanged();
+            }
+        }
+    }
+
+}
