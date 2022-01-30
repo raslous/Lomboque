@@ -1,0 +1,36 @@
+﻿@inherits LayoutComponentBase
+@namespace Lomboque.Presentation.Server.Pages.Layout
+
+
+<PageTitle>Server</PageTitle>
+
+<div class="page">
+    <AuthorizeView>
+        <Authorized>
+            <div class="sidebar">
+                <NavMenu />
+            </div>
+        </Authorized>
+    </AuthorizeView>
+
+    <main>
+        <div class="top-row px-4">
+            <AuthorizeView>
+                <Authorized>
+                    <a href="/" target="_self">Sign Out</a>
+                </Authorized>
+                <NotAuthorized>
+                    <a href="/sign-in" target="_self">Sign In</a>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code{
+
+}
