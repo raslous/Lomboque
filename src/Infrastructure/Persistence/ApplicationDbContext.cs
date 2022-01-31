@@ -10,7 +10,7 @@ namespace Lomboque.Infrastructure.Persistence
             :base(options)
         { }
 
-        public DbSet<Observasi> LarikObservasi => Set<Observasi>();
+        public DbSet<Observasi> Observasi => Set<Observasi>();
 
         public new void SaveChanges()
             => base.SaveChanges();

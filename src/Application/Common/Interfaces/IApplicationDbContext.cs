@@ -5,7 +5,7 @@ namespace Lomboque.Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
-        DbSet<Observasi> LarikObservasi { get; }
+        DbSet<Observasi> Observasi { get; }
         
         void SaveChanges();
         Task SaveChangesAsync();

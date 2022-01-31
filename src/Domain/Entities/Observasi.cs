@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using Lomboque.Domain.Entities;
-
 namespace Lomboque.Domain.Entities
 {
     public class Observasi
     {
         public int Id { get; set; }
+        public int NomorPot { get; set; }
+        public float SuhuUdara { get; set; }
+        public int KelembabanTanah { get; set; }
         public DateOnly Tanggal { get; set; } = new DateOnly(
             DateTime.Now.Year, 
             DateTime.Now.Month,
@@ -17,7 +17,7 @@ namespace Lomboque.Domain.Entities
             DateTime.Now.Second
         );
 
-        public List<Pot>? LarikPot { get; set; }
+ 
 
     }
 }
