@@ -28,9 +28,9 @@ dotnet ef --startup-project .\src\Presentation\Server\ database update "init_ide
 
 ### ApplicationDbContext
 ``` csharp
-dotnet ef --startup-project .\src\Presentation\Server\ migrations add "init_application" --project .\src\Infrastructure\ --context ApplicationDbContext --output-dir "Persistence/Migrations"
+dotnet ef --startup-project .\src\Presentation\Server\ migrations add "initApp" --project .\src\Infrastructure\ --context ApplicationDbContext --output-dir "Persistence/Migrations"
 
-dotnet ef --startup-project .\src\Presentation\Server\ database update "init_application" --project .\src\Infrastructure\ --context ApplicationDbContext
+dotnet ef --startup-project .\src\Presentation\Server\ database update "initApp" --project .\src\Infrastructure\ --context ApplicationDbContext
 ```
 
 
