@@ -18,21 +18,30 @@ Welcome to your new app.
 </div>
 <br>
 <div>
-    dto: @dto
-</div>
-<br>
-<div>
     <h2>stack:</h2>
     @_stack
 </div>
 
+<button @onclick="Insert">Insert</button>
+
 @code {
 
     private string? json;
-    private string? dto;
-
-    private string _stackMsg = "Pass...\n";
     private string? _stack;
+
+    private async Task InsertAsync()
+    {
+        if(json is not null)
+            await AppController.InsertObservasiAsync(json);
+
+    }
+
+    private void Insert()
+    {
+        if(json is not null)
+            AppController.InsertObservasi(json);
+
+    }
 
     private async Task RunInBackground(TimeSpan timeSpan, Action action)
     {
@@ -63,10 +72,7 @@ Welcome to your new app.
                 this.StateHasChanged();
             }
 
-            await RunInBackground(TimeSpan.FromSeconds(1), () => {
-                _stack += _stackMsg;
-                this.StateHasChanged();
-            });
+
             
         }
     }

@@ -14,6 +14,21 @@ namespace Lomboque.Application.Actions
             this.applicationDbContext = applicationDbContext;
         }
 
+        public void InsertObservasi(string json)
+        {
+            ObservasiDto observasiDto  = JsonSerializer
+                .Deserialize<ObservasiDto>(json)!;
+
+            List<Observasi> hasilObservasi = AutoMapper(observasiDto);
+            
+            foreach (var pot in hasilObservasi)
+            {
+                applicationDbContext.Observasi.Add(pot);    
+                applicationDbContext.SaveChanges();
+            }
+
+        }
+
         public async Task InsertObservasiAsync(string json)
         {
             ObservasiDto observasiDto  = JsonSerializer
