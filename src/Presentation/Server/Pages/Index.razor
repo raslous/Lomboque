@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using Lomboque.Application.Actions
+@using System.Threading
 
 @inject IHttpClientFactory ClientFactory
 @inject DataController DataController
@@ -11,7 +12,7 @@
 
 Welcome to your new app.
 
-
+<input type="text" name="sample" id="sample" placeholder="Sample">
 
 <div>
     json: @json
@@ -20,11 +21,29 @@ Welcome to your new app.
 <div>
     dto: @dto
 </div>
+<br>
+<div>
+    <h2>stack:</h2>
+    @_stack
+</div>
 
 @code {
 
     private string? json;
     private string? dto;
+
+    private string _stackMsg = "Pass...\n";
+    private string? _stack;
+
+    private async Task RunInBackground(TimeSpan timeSpan, Action action)
+    {
+        var periodicTimer = new PeriodicTimer(timeSpan);
+        while (await periodicTimer.WaitForNextTickAsync())
+        {
+            action();
+        }
+    }
+    
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -48,8 +67,14 @@ Welcome to your new app.
                 this.StateHasChanged();
             }
 
+            await RunInBackground(TimeSpan.FromSeconds(1), () => {
+                @* Console.WriteLine("Printing"); *@
+                _stack += _stackMsg;
+                this.StateHasChanged();
+            });
             
         }
     }
+
 
 }
