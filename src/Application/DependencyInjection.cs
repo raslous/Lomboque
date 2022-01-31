@@ -9,7 +9,6 @@ namespace Lomboque.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<AppController>();
-            services.AddScoped<DataController>();
 
             return services;
         }

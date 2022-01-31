@@ -1,10 +1,9 @@
 ﻿@page "/"
-@using Lomboque.Application.Actions
 @using System.Threading
+@using Lomboque.Application.Actions
 
 @inject IHttpClientFactory ClientFactory
-@inject DataController DataController
-
+@inject AppController AppController
 
 <PageTitle>Index</PageTitle>
 
@@ -49,8 +48,6 @@ Welcome to your new app.
     {
         if(firstRender)
         {
-            dto = DataController.CreateData();
-
             var request = new HttpRequestMessage(HttpMethod.Get, "http://192.168.2.118/get");
             var client = ClientFactory.CreateClient();
             var response = await client.SendAsync(request);
@@ -61,14 +58,12 @@ Welcome to your new app.
                 using var streamReader = new StreamReader(responseStream);
 
                 json = streamReader.ReadToEnd();
-                DataController.SerializeData(json);
 
                 System.Console.WriteLine(json);
                 this.StateHasChanged();
             }
 
             await RunInBackground(TimeSpan.FromSeconds(1), () => {
-                @* Console.WriteLine("Printing"); *@
                 _stack += _stackMsg;
                 this.StateHasChanged();
             });
