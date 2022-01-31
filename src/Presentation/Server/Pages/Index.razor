@@ -1,5 +1,8 @@
 ﻿@page "/"
+@using Lomboque.Application.Actions
+
 @inject IHttpClientFactory ClientFactory
+@inject DataController DataController
 
 
 <PageTitle>Index</PageTitle>
@@ -8,27 +11,27 @@
 
 Welcome to your new app.
 
-<AuthorizeView>
-    <Authorized>
-        Hi, @context.User.Identity!.Name
-    </Authorized>
-    <NotAuthorized>
-
-    </NotAuthorized>
-</AuthorizeView>
 
 
 <div>
     json: @json
 </div>
+<br>
+<div>
+    dto: @dto
+</div>
 
 @code {
 
     private string? json;
+    private string? dto;
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if(firstRender)
         {
+            dto = DataController.CreateData();
+
             var request = new HttpRequestMessage(HttpMethod.Get, "http://192.168.2.118/get");
             var client = ClientFactory.CreateClient();
             var response = await client.SendAsync(request);
@@ -39,9 +42,13 @@ Welcome to your new app.
                 using var streamReader = new StreamReader(responseStream);
 
                 json = streamReader.ReadToEnd();
+                DataController.SerializeData(json);
+
                 System.Console.WriteLine(json);
                 this.StateHasChanged();
             }
+
+            
         }
     }
 

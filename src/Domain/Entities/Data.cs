@@ -6,7 +6,7 @@ namespace Lomboque.Domain.Entities
     {
         public int Id { get; set; }
         public float Temperature { get; set; }
-        public List<float> Humidity { get; set; } = new();
+        public List<float> Humidities { get; set; } = new();
 
     }
 }

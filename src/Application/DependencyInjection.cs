@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
+using Lomboque.Application.Actions;
 
 namespace Lomboque.Application
 {
@@ -7,6 +8,8 @@ namespace Lomboque.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddScoped<DataController>();
+
             return services;
         }
     }
