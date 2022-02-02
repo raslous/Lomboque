@@ -54,6 +54,7 @@ namespace Lomboque.Application.Actions
             for (int i = 0; i < observasiDto.KelembabanTanah.Count; i++)
             {
                 Observasi pot = new Observasi{
+                    NomorPot = i+1,
                     SuhuUdara = observasiDto.SuhuUdara,
                     KelembabanTanah = observasiDto.KelembabanTanah[i]
                 };

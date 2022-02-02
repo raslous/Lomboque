@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Components;
 
 namespace Lomboque.Presentation.Server.Pages.Layout
 {
     public partial class MainLayout
     {
+        [Inject] protected IHttpClientFactory ClientFactory { get; init; } = default!;
+    
         private async Task RunInBackground(TimeSpan timeSpan, Action action)
         {
             var periodicTimer = new PeriodicTimer(timeSpan);
