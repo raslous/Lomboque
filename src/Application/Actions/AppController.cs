@@ -14,6 +14,25 @@ namespace Lomboque.Application.Actions
             this.applicationDbContext = applicationDbContext;
         }
 
+        public List<Observasi> SejarahObservasi(int pot)
+        {
+            List<Observasi> sejarahObservasi = applicationDbContext
+                .Observasi
+                .Where(x => x.NomorPot == pot)
+                .ToList();
+
+            return sejarahObservasi;
+        }
+
+        public List<Observasi> HasilObservasi(string json)
+        {
+            ObservasiDto observasiDto  = JsonSerializer
+                .Deserialize<ObservasiDto>(json)!;
+
+            List<Observasi> hasilObservasi = AutoMapper(observasiDto);
+            return hasilObservasi;
+        }
+
         public void InsertObservasi(string json)
         {
             ObservasiDto observasiDto  = JsonSerializer
