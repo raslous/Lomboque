@@ -9,7 +9,7 @@ namespace Lomboque.Domain.Entities
         public DateOnly Tanggal { get; set; } = new DateOnly(
             DateTime.Now.Year, 
             DateTime.Now.Month,
-            DateTime.Now.Day - 5
+            DateTime.Now.Day
         );
         public TimeOnly Jam { get; set; } = new TimeOnly(
             DateTime.Now.Hour,
