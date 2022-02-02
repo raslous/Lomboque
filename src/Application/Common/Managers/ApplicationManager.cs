@@ -31,7 +31,6 @@ namespace Lomboque.Application.Common.Managers
                 using var streamReader = new StreamReader(responseStream);
 
                 string json = streamReader.ReadToEnd();
-                System.Console.WriteLine(json);
             }
         }
     }

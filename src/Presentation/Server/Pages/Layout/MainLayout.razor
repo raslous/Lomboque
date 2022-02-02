@@ -1,29 +1,20 @@
 ﻿@inherits LayoutComponentBase
 @namespace Lomboque.Presentation.Server.Pages.Layout
+@using Lomboque.Application.Actions
+
+
+
+@inject IHttpClientFactory ClientFactory
+@inject AppController Controller
 
 <PageTitle>Server</PageTitle>
 
 <div class="page">
-    <AuthorizeView>
-        <Authorized>
-            <div class="sidebar">
-                <NavMenu />
-            </div>
-        </Authorized>
-    </AuthorizeView>
+    <div class="sidebar">
+        <NavMenu />
+    </div>
 
     <main>
-        <div class="top-row px-4">
-            <AuthorizeView>
-                <Authorized>
-                    <a href="/" target="_self">Sign Out</a>
-                </Authorized>
-                <NotAuthorized>
-                    <a href="/sign-in" target="_self">Sign In</a>
-                </NotAuthorized>
-            </AuthorizeView>
-        </div>
-
         <article class="content px-4">
             @Body
         </article>
@@ -32,4 +23,28 @@
 
 @code{
 
+    string uri = "http://192.168.2.101/get";
+    string? json;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(3));
+            while (await periodicTimer.WaitForNextTickAsync())
+            {
+                json = await HttpRequest(uri);
+                System.Console.WriteLine(json);
+                
+                if(!string.IsNullOrEmpty(json))
+                {
+                    await Controller.InsertObservasiAsync(json);
+                    System.Console.WriteLine("INSERT");
+
+                }
+            }
+
+
+        }
+    }    
 }
