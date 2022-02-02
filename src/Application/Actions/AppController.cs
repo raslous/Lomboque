@@ -38,12 +38,14 @@ namespace Lomboque.Application.Actions
             
             foreach (var pot in hasilObservasi)
             {
-                applicationDbContext.Observasi.Add(pot);    
+                await applicationDbContext.Observasi.AddAsync(pot);    
             }
 
-            await applicationDbContext.SaveChangesAsync();
+            applicationDbContext.SaveChanges();
 
         }
+
+
 
         public List<Observasi> AutoMapper(ObservasiDto observasiDto)
         {
