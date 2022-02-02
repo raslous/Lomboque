@@ -20,6 +20,8 @@ namespace Lomboque.Infrastructure
             );
 
             services.AddSingleton<RuntimeService>();
+            services.AddSingleton<IRuntimeService>(provider => provider
+                .GetRequiredService<RuntimeService>());
 
             return services;
         }

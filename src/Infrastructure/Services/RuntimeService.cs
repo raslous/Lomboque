@@ -1,8 +1,8 @@
-using System.Threading;
+using Lomboque.Application.Common.Interfaces;
 
 namespace Lomboque.Infrastructure.Services
 {
-    public class RuntimeService
+    public class RuntimeService : IRuntimeService
     {
         public async Task RunInBackground(TimeSpan timeSpan, Action action)
         {

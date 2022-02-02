@@ -57,7 +57,7 @@ Welcome to your new app.
     {
         if(firstRender)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "http://192.168.2.118/get");
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://192.168.2.105/get");
             var client = ClientFactory.CreateClient();
             var response = await client.SendAsync(request);
 
