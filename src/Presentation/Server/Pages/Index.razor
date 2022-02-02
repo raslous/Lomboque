@@ -1,9 +1,12 @@
 ﻿@page "/"
 @using System.Threading
 @using Lomboque.Application.Actions
+@using Lomboque.Application.Common.Managers
 
 @inject IHttpClientFactory ClientFactory
 @inject AppController AppController
+
+@inject ApplicationManager AppManager
 
 <PageTitle>Index</PageTitle>
 
@@ -11,71 +14,16 @@
 
 Welcome to your new app.
 
-<input type="text" name="sample" id="sample" placeholder="Sample">
-
-<div>
-    json: @json
-</div>
-<br>
-<div>
-    <h2>stack:</h2>
-    @_stack
-</div>
-
-<button @onclick="Insert">Insert</button>
-
-@code {
-
-    private string? json;
-    private string? _stack;
-
-    private async Task InsertAsync()
-    {
-        if(json is not null)
-            await AppController.InsertObservasiAsync(json);
-
-    }
-
-    private void Insert()
-    {
-        if(json is not null)
-            AppController.InsertObservasi(json);
-
-    }
-
-    private async Task RunInBackground(TimeSpan timeSpan, Action action)
-    {
-        var periodicTimer = new PeriodicTimer(timeSpan);
-        while (await periodicTimer.WaitForNextTickAsync())
-        {
-            action();
-        }
-    }
-    
+@code{
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if(firstRender)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "http://192.168.2.105/get");
-            var client = ClientFactory.CreateClient();
-            var response = await client.SendAsync(request);
+            string uri = "http://192.168.2.101/get";
+            await AppManager.HourlyTask(uri);
+            System.Console.WriteLine("Bleh");
 
-            if (response.IsSuccessStatusCode)
-            {
-                using var responseStream = await response.Content.ReadAsStreamAsync();
-                using var streamReader = new StreamReader(responseStream);
-
-                json = streamReader.ReadToEnd();
-
-                System.Console.WriteLine(json);
-                this.StateHasChanged();
-            }
-
-
-            
         }
     }
-
-
 }
