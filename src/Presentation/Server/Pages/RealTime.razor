@@ -26,20 +26,20 @@
 
 <br class="py-3">
 
-Sejarah Pot 1: @SejarahObservasiPot1.Count
 
 <div>
     <h3>Sejarah Observasi:</h3>
     <div class="d-flex flex-row">
         <div>
+            <h3>Pot 2</h3>
             <table class="table table-sm ">
                 <thead>
                     <tr>
                     <th scope="col">Pot</th>
                     <th scope="col">Tanggal</th>
                     <th scope="col">Jam</th>
-                    <th scope="col">Suhu</th>
-                    <th scope="col">Kelembaban</th>
+                    <th scope="col">Suhu Udara</th>
+                    <th scope="col">Kelembaban Tanah</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,7 +50,7 @@ Sejarah Pot 1: @SejarahObservasiPot1.Count
                         <td>@observasi.Tanggal</td>
                         <td>@observasi.Jam</td>
                         <td>@observasi.SuhuUdara</td>
-                        <td>@observasi.KelembabanTanah</td>%
+                        <td>@observasi.KelembabanTanah%</td>
                     </tr>
                 }
                 </tbody>
@@ -58,19 +58,46 @@ Sejarah Pot 1: @SejarahObservasiPot1.Count
         </div>
         <span class="px-3"></span>
         <div>
-            pot 2
+            <h3>Pot 2</h3>
+            <table class="table table-sm ">
+                <thead>
+                    <tr>
+                    <th scope="col">Pot</th>
+                    <th scope="col">Tanggal</th>
+                    <th scope="col">Jam</th>
+                    <th scope="col">Suhu Udara</th>
+                    <th scope="col">Kelembaban Tanah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var observasi in SejarahObservasiPot2)
+                {
+                    <tr>
+                        <th scope="row">@observasi.NomorPot</th>
+                        <td>@observasi.Tanggal</td>
+                        <td>@observasi.Jam</td>
+                        <td>@observasi.SuhuUdara</td>
+                        <td>@observasi.KelembabanTanah%</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 
 @code{
 
-    string uri = "http://192.168.2.101/get";
+    string uri = Config.URI;
     string? json = string.Empty;
+
+    int hCount = 0;
 
     protected override void OnInitialized()
     {
-        
+        hCount = AppController.ObsCount(pot: 1);
+        SejarahObservasiPot1 = AppController.SejarahObservasi(pot: 1);
+        SejarahObservasiPot2 = AppController.SejarahObservasi(pot: 2);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -83,8 +110,8 @@ Sejarah Pot 1: @SejarahObservasiPot1.Count
                 SejarahObservasiPot2 = AppController.SejarahObservasi(pot: 2);
                 SejarahObservasiPot1 = AppController.SejarahObservasi(pot: 1);
 
-                json = await HttpRequest(uri);
-                RealTimeObservasi = AppController.HasilObservasi(json!);
+                @* json = await HttpRequest(uri); *@
+                @* RealTimeObservasi = AppController.HasilObservasi(json!); *@
 
                 this.StateHasChanged();
             }

@@ -25,9 +25,9 @@ namespace Lomboque.Application.Actions
             List<Observasi> sejarahObservasi = applicationDbContext
                 .Observasi
                 .Where(x => x.NomorPot == pot)
-                .OrderBy(y => y.Jam)
                 .ToList();
 
+                // .OrderBy(y => y.Jam)
             return sejarahObservasi;
         }
 
