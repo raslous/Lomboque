@@ -31,7 +31,7 @@
     <h3>Sejarah Observasi:</h3>
     <div class="d-flex flex-row">
         <div>
-            <h3>Pot 2</h3>
+            <h3>Pot 1</h3>
             <table class="table table-sm ">
                 <thead>
                     <tr>
@@ -104,14 +104,14 @@
     {
          if(firstRender)
         {
-            var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(60));
+            var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(5));
             while (await periodicTimer.WaitForNextTickAsync())
             {
                 SejarahObservasiPot2 = AppController.SejarahObservasi(pot: 2);
                 SejarahObservasiPot1 = AppController.SejarahObservasi(pot: 1);
 
-                @* json = await HttpRequest(uri); *@
-                @* RealTimeObservasi = AppController.HasilObservasi(json!); *@
+                json = await HttpRequest(uri);
+                RealTimeObservasi = AppController.HasilObservasi(json!);
 
                 this.StateHasChanged();
             }
