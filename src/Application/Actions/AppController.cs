@@ -14,11 +14,18 @@ namespace Lomboque.Application.Actions
             this.applicationDbContext = applicationDbContext;
         }
 
+        public int ObsCount(int pot)
+        {
+            var obs = applicationDbContext.Observasi.ToList();
+            return obs.Count;
+        }
+
         public List<Observasi> SejarahObservasi(int pot)
         {
             List<Observasi> sejarahObservasi = applicationDbContext
                 .Observasi
                 .Where(x => x.NomorPot == pot)
+                .OrderBy(y => y.Jam)
                 .ToList();
 
             return sejarahObservasi;

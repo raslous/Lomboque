@@ -3,11 +3,7 @@
 
 <h3>Observasi Saat Ini:</h3>
 <div class="d-flex flex-row w-25">
-    @* <div>
-        @json
-    </div> *@
-
-    <table class="table">
+    <table class="table table-sm table-dark">
         <thead>
             <tr>
             <th scope="col">Pot</th>
@@ -29,11 +25,36 @@
 </div>
 
 <br class="py-3">
+
+Sejarah Pot 1: @SejarahObservasiPot1.Count
+
 <div>
-<h3>Sejarah Observasi:</h3>
+    <h3>Sejarah Observasi:</h3>
     <div class="d-flex flex-row">
         <div>
-            pot 1
+            <table class="table table-sm ">
+                <thead>
+                    <tr>
+                    <th scope="col">Pot</th>
+                    <th scope="col">Tanggal</th>
+                    <th scope="col">Jam</th>
+                    <th scope="col">Suhu</th>
+                    <th scope="col">Kelembaban</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var observasi in SejarahObservasiPot1)
+                {
+                    <tr>
+                        <th scope="row">@observasi.NomorPot</th>
+                        <td>@observasi.Tanggal</td>
+                        <td>@observasi.Jam</td>
+                        <td>@observasi.SuhuUdara</td>
+                        <td>@observasi.KelembabanTanah</td>%
+                    </tr>
+                }
+                </tbody>
+            </table>
         </div>
         <span class="px-3"></span>
         <div>
@@ -47,19 +68,23 @@
     string uri = "http://192.168.2.101/get";
     string? json = string.Empty;
 
+    protected override void OnInitialized()
+    {
+        
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
          if(firstRender)
         {
-            var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(3));
+            var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(60));
             while (await periodicTimer.WaitForNextTickAsync())
             {
+                SejarahObservasiPot2 = AppController.SejarahObservasi(pot: 2);
+                SejarahObservasiPot1 = AppController.SejarahObservasi(pot: 1);
+
                 json = await HttpRequest(uri);
                 RealTimeObservasi = AppController.HasilObservasi(json!);
-
-                HasilObservasiPot1 = AppController.SejarahObservasi(pot: 1);
-                HasilObservasiPot2 = AppController.SejarahObservasi(pot: 2);
-
 
                 this.StateHasChanged();
             }
